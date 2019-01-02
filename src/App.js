@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Person'
+import Person from './Person/Person'
+import './Person/Person.css'
 
 class App extends Component {
   //state is a given attribute for Component classes. we use this because when the state is changed, the render() call gets called
