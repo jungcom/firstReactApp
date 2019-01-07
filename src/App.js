@@ -8,32 +8,33 @@ class App extends Component {
   
   state = {
     persons: [
-      {name : 'Alex', age: 28},
-      {name : 'Bob', age: 24},
-      {name : 'Steve', age: 20}
+      {id : 'suy8f', name : 'Alex', age: 28},
+      {id : 'suy8f123', name : 'Bob', age: 24},
+      {id : 'suy8f125fd', name : 'Steve', age: 20}
     ],
     otherstate : 'some other value',
     showPersons : false
   }
 
-  switchNameHandler = (newName) => {
-    this.setState({
-      persons: [
-        {name : newName, age: 29},
-        {name : 'Bob', age: 24},
-        {name : 'Steve', age: 20}
-      ]
-    })
+  nameChangedHandler = (event, id) =>{
+    const personIndex = this.state.persons.findIndex( p => {
+        return p.id === id;
+    });
+
+    const person = {...this.state.persons[personIndex]};
+    person.name = event.target.value;
+    
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({persons: persons})
   }
 
-  nameChangedHandler = (event) =>{
-    this.setState({
-      persons: [
-        {name : event.target.value, age: 29},
-        {name : 'Bob', age: 24},
-        {name : 'Steve', age: 20}
-      ]
-    })
+  deletePersonHandler = (personIndex) =>{
+    // const persons = this.state.persons.slice();
+    const persons = [...this.state.persons]
+    persons.splice(personIndex,1);
+    this.setState({persons:persons});
   }
 
   togglepersonHandler = () =>{
@@ -54,8 +55,14 @@ class App extends Component {
     if (this.state.showPersons){
       persons = (
         <div>
-          {this.state.persons.map(person => {
-            return <Person name={person.name} age={person.age}/>
+          {this.state.persons.map((person,index) => {
+            return <Person 
+            click={()=>this.deletePersonHandler(index)}
+            name={person.name} 
+            age={person.age}
+            key={person.id}
+            changed={(event) => this.nameChangedHandler(event,person.id)}
+            />
           })}
         </div>
       );
@@ -68,7 +75,6 @@ class App extends Component {
         {persons}
       </div>
     );
-    //return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work?'));
   }
 }
 
