@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person'
 import './Person/Person.css'
-import Radium, { StyleRoot } from 'radium'
 
 class App extends Component {
   //state is a given attribute for Component classes. we use this because when the state is changed, the render() call gets called
@@ -50,10 +49,6 @@ class App extends Component {
       border: '1x solid blue',
       padding: '8px',
       cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black',
-      }
     };
 
     let persons = null;
@@ -73,9 +68,6 @@ class App extends Component {
       );
 
       style.backgroundColor = 'red'
-      style[':hover'] = {
-        backgroundColor : 'salmon',
-      }
     }
 
     let classes = [];
@@ -87,16 +79,14 @@ class App extends Component {
     }
 
     return (
-      <StyleRoot>
         <div className="App">
           <h1>Hi</h1>
           <p className={classes.join(' ')}>This really works!!</p>
           <button style={style} onClick={this.togglepersonHandler}>Switch Name</button>
           {persons}
         </div>
-      </StyleRoot>
     );
   }
 }
 
-export default Radium(App);
+export default App;
