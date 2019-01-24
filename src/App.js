@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person'
 import './Person/Person.css'
+import Radium, { StyleRoot } from 'radium'
 
 class App extends Component {
   //state is a given attribute for Component classes. we use this because when the state is changed, the render() call gets called
@@ -44,11 +45,15 @@ class App extends Component {
 
   render() {
     const style= {
-      backgroundColor:'white',
+      backgroundColor:'green',
       font : 'inherit',
       border: '1x solid blue',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black',
+      }
     };
 
     let persons = null;
@@ -66,16 +71,32 @@ class App extends Component {
           })}
         </div>
       );
+
+      style.backgroundColor = 'red'
+      style[':hover'] = {
+        backgroundColor : 'salmon',
+      }
+    }
+
+    let classes = [];
+    if (this.state.persons.length <= 2){
+      classes.push('red')
+    }
+    if (this.state.persons.length <= 1){
+      classes.push('bold')
     }
 
     return (
-      <div className="App">
-        <h1>Hi</h1>
-        <button style={style} onClick={this.togglepersonHandler}>Switch Name</button>
-        {persons}
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <h1>Hi</h1>
+          <p className={classes.join(' ')}>This really works!!</p>
+          <button style={style} onClick={this.togglepersonHandler}>Switch Name</button>
+          {persons}
+        </div>
+      </StyleRoot>
     );
   }
 }
 
-export default App;
+export default Radium(App);
